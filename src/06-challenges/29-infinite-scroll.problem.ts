@@ -1,7 +1,12 @@
 import { expect, it } from "vitest";
 import { Equal, Expect } from "../helpers/type-utils";
 
-const makeInfiniteScroll = (params: unknown) => {
+type makeInfiniteScroll<TRow> = {
+  key: keyof TRow;
+  initialRows?: TRow[];
+  fetchRows: () => Promise<TRow[]>;
+};
+const makeInfiniteScroll = <TRow>(params: makeInfiniteScroll<TRow>) => {
   const data = params.initialRows || [];
 
   const scroll = async () => {
